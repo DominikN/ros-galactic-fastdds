@@ -6,6 +6,7 @@ while [[ $(grep 'dds-discovery-server' /etc/hosts | wc -l) -eq 0 ]]; do
     sleep 1
 done
 
+sleep 1
 echo "\"dds-discovery-server\" present in /etc/hosts:"
 
 # print the IPv6 address of the Discovery Server
