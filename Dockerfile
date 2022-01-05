@@ -38,6 +38,8 @@ RUN source /opt/ros/galactic/setup.bash && \
     rm -rf log/ build/ src/ colcon.meta fastdds.repos && \
     rm -rf /var/lib/apt/lists/*
 
+COPY ros_entrypoint.sh /
+
 COPY fastdds_server.xml /
 COPY fastdds_client.xml /
 COPY wait_for_discovery_server.sh /
