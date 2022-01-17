@@ -44,4 +44,5 @@ COPY fastdds_server.xml /
 COPY fastdds_client.xml /
 COPY wait_for_discovery_server.sh /
 
+RUN chmod +x /ros_entrypoint.sh
 RUN chmod +x /wait_for_discovery_server.sh
