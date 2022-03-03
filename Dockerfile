@@ -1,4 +1,4 @@
-FROM ros:galactic
+FROM ros:galactic AS fastdds_builder
 
 # Use bash instead of sh for the RUN steps
 SHELL ["/bin/bash", "-c"]
@@ -37,6 +37,15 @@ RUN source /opt/ros/galactic/setup.bash && \
     apt autoremove -y && \
     rm -rf log/ build/ src/ colcon.meta fastdds.repos && \
     rm -rf /var/lib/apt/lists/*
+
+FROM ros:galactic-ros-core
+
+RUN apt-get update && apt-get install -y \
+    libyaml-cpp-dev && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY --from=fastdds_builder /fastdds_overlay/install /fastdds_overlay/install
 
 COPY ros_entrypoint.sh /
 
