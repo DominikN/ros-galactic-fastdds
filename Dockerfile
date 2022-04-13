@@ -9,9 +9,7 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     libasio-dev \
     cmake g++ pip wget git \
-    libyaml-cpp-dev \
-    # Demo packages
-    ros-${ROS_DISTRO}-demo-nodes-cpp
+    libyaml-cpp-dev
 
 # Build Fast DDS and rmw_fastrtps from sources. This is because specifying IP addresses using names
 # is only supported in Fast DDS v2.4.0 and onwards, but ROS 2 Galactic binary installation ships
@@ -41,6 +39,7 @@ RUN source /opt/ros/galactic/setup.bash && \
 FROM ros:galactic-ros-core
 
 RUN apt-get update && apt-get install -y \
+    ros-${ROS_DISTRO}-demo-nodes-cpp \
     libyaml-cpp-dev && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
