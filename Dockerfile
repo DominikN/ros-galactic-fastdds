@@ -38,11 +38,12 @@ RUN source /opt/ros/${ROS_DISTRO}/setup.bash && \
 
 FROM ros:galactic-ros-core
 
-# RUN apt-get update && apt-get install -y \
-#         libyaml-cpp-dev && \
-#     apt-get autoremove -y && \
-#     apt-get clean && \
-#     rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y \
+        # libyaml-cpp-dev && \
+        iputils-ping && \
+    apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY --from=fastdds_builder /fastdds_overlay/install /fastdds_overlay/install
 
