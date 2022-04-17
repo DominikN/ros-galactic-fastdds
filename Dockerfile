@@ -39,7 +39,6 @@ RUN source /opt/ros/galactic/setup.bash && \
 FROM ros:galactic-ros-core
 
 RUN apt-get update && apt-get install -y \
-    ros-${ROS_DISTRO}-demo-nodes-cpp \
     libyaml-cpp-dev && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
@@ -47,10 +46,6 @@ RUN apt-get update && apt-get install -y \
 COPY --from=fastdds_builder /fastdds_overlay/install /fastdds_overlay/install
 
 COPY ros_entrypoint.sh /
+COPY waid_ds.sh /
 
-COPY fastdds_server.xml /
-COPY fastdds_client.xml /
-COPY wait_for_discovery_server.sh /
-
-RUN chmod +x /ros_entrypoint.sh
-RUN chmod +x /wait_for_discovery_server.sh
+ENV RMW_IMPLEMENTATION=rmw_fastrtps_cpp
