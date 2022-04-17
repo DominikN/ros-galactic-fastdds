@@ -50,3 +50,4 @@ COPY ros_entrypoint.sh /
 COPY wait_ds.sh /
 
 ENV RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+ENV DS_HOSTNAME=discovery-server

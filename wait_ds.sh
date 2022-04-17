@@ -1,17 +1,18 @@
 #!/bin/bash
 
-echo "Waiting for \"dds-discovery-server\" host to be available in /etc/hosts"
+echo "Waiting for \"${DS_HOSTNAME}\" host to be available in /etc/hosts"
 
-while [[ $(grep 'dds-discovery-server' /etc/hosts | wc -l) -eq 0 ]]; do 
+while [[ $(grep ${DS_HOSTNAME} /etc/hosts | wc -l) -eq 0 ]]; do 
     sleep 1
 done
 
 sleep 2
 
-echo "\"dds-discovery-server\" present in /etc/hosts:"
+ping6 -w 120 -c 1 ${DS_HOSTNAME}
+
+echo "\"${DS_HOSTNAME}\" present in /etc/hosts:"
 
 # print the IPv6 address of the Discovery Server
-grep 'dds-discovery-server' /etc/hosts
+grep ${DS_HOSTNAME} /etc/hosts
 
 echo "Ready to launch ROS 2 nodes"
-
