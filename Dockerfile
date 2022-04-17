@@ -25,7 +25,6 @@ RUN source /opt/ros/${ROS_DISTRO}/setup.bash && \
     # Download sources
     mkdir src && \
     vcs import src < fastdds.repos && \
-    git clone --branch release-1.10.0 https://github.com/google/googletest src/googletest-distribution && \
     # Install rmw_fastrtps_cpp dependencies without installing ros-galactic-rmw-fastrtps-cpp
     sed -i 's/ros-'$ROS_DISTRO'-rmw-cyclonedds-cpp | ros-'$ROS_DISTRO'-rmw-connextdds | ros-'$ROS_DISTRO'-rmw-fastrtps-cpp/ros-'$ROS_DISTRO'-rmw-dds-common/' /var/lib/dpkg/status && \
     rosdep update --rosdistro $ROS_DISTRO && \
