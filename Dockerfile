@@ -46,6 +46,6 @@ RUN apt-get update && apt-get install -y \
 COPY --from=fastdds_builder /fastdds_overlay/install /fastdds_overlay/install
 
 COPY ros_entrypoint.sh /
-COPY waid_ds.sh /
+COPY wait_ds.sh /
 
 ENV RMW_IMPLEMENTATION=rmw_fastrtps_cpp
