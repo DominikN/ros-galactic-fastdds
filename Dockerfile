@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y \
 # rmw implementation, so it will be already installed in the ros:humble Docker image.
 WORKDIR /fastdds_overlay
 COPY fastdds.repos colcon.meta /fastdds_overlay/
-RUN source /opt/ros/galactic/setup.bash && \
+RUN source /opt/ros/${ROS_DISTRO}/setup.bash && \
     # Download sources
     mkdir src && \
     vcs import src < fastdds.repos && \
@@ -29,6 +29,7 @@ RUN source /opt/ros/galactic/setup.bash && \
     sed -i 's/ros-'$ROS_DISTRO'-rmw-cyclonedds-cpp | ros-'$ROS_DISTRO'-rmw-connextdds | ros-'$ROS_DISTRO'-rmw-fastrtps-cpp/ros-'$ROS_DISTRO'-rmw-dds-common/' /var/lib/dpkg/status && \
     rosdep update --rosdistro $ROS_DISTRO && \
     rosdep install --from-paths src --ignore-src -y && \
+    git clone --branch release-1.10.0 https://github.com/google/googletest src/googletest-distribution && \
     # Build overlay
     colcon build && \
     # Cleanup
@@ -38,10 +39,11 @@ RUN source /opt/ros/galactic/setup.bash && \
 
 FROM ros:galactic-ros-core
 
-RUN apt-get update && apt-get install -y \
-    libyaml-cpp-dev && \
-    apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && apt-get install -y \
+#         libyaml-cpp-dev && \
+#     apt-get autoremove -y && \
+#     apt-get clean && \
+#     rm -rf /var/lib/apt/lists/*
 
 COPY --from=fastdds_builder /fastdds_overlay/install /fastdds_overlay/install
 
